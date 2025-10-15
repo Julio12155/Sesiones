@@ -13,6 +13,18 @@ app.use(session({
     cookie:{secure:false}
 }))
 app.get('/inicio',(req,res)=>{
-    if
-    req.session
+    if (req.session.usuario){
+        res.send(`Bienvenido ${req.session.usuario} al panel`)
+    }else{
+        res.status(401).send(`No tienenes sesion activa`)
+    }
+})
+
+app.post('login',(req,res)=>{
+    const{ usuario,password}=req.body
+    if(usuario==='admin'&& password==='1234'){
+        res.send('Inicio de sesion correcto')
+    }else{
+        res.status(401).send('Credenciales incorrectas')
+    }
 })
