@@ -28,3 +28,11 @@ app.post('login',(req,res)=>{
         res.status(401).send('Credenciales incorrectas')
     }
 })
+app.get('cerrar',(req,res)=>{
+    req.session.destroy(err=>{
+        if(err)return res.status(500).send('Error al cerrar sesion')
+            res.send('sesion cerrada correctamente')
+    })
+
+})
+app.listen(PORT,()=>console.log('Servidor escuchando en el puerto 3000'))
