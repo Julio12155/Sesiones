@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panadería - Login</title>
+ <link rel="stylesheet" href="styleprincipal.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">🥖</div>
+            <h1>Panadería</h1>
+            <p>Bienvenido a nuestro portal</p>
+        </div>
+
+        <!-- Formulario de Login -->
+        <div class="form-container login active">
+            <div class="form-title">Iniciar Sesión</div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Correo Electrónico</label>
+                    <input type="email" id="loginEmail" placeholder="tu@correo.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" placeholder="Ingresa tu contraseña" required>
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe" style="margin-bottom: 0; margin-left: 5px;">Recuérdame</label>
+                    </div>
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn-login">Entrar</button>
+                    <button type="button" class="btn-register" onclick="toggleForms()">Registrarse</button>
+                </div>
+            </form>
+
+            <div class="toggle-form">
+                ¿No tienes cuenta? <a onclick="toggleForms()">Crea una aquí</a>
+            </div>
+        </div>
+
+        <!-- Formulario de Registro -->
+        <div class="form-container register">
+            <div class="form-title">Crear Cuenta</div>
+            
+            <div class="success-message" id="successMessage">
+                ¡Cuenta creada exitosamente! Ahora puedes iniciar sesión.
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Nombre Completo</label>
+                    <input type="text" id="registerName" placeholder="Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">Correo Electrónico</label>
+                    <input type="email" id="registerEmail" placeholder="tu@correo.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPhone">Teléfono</label>
+                    <input type="tel" id="registerPhone" placeholder="+34 123 456 789">
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword">Contraseña</label>
+                    <input type="password" id="registerPassword" placeholder="Mínimo 8 caracteres" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmar Contraseña</label>
+                    <input type="password" id="registerConfirmPassword" placeholder="Confirma tu contraseña" required>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn-login">Registrarse</button>
+                    <button type="button" class="btn-register" onclick="toggleForms()">Volver</button>
+                </div>
+            </form>
+
+            <div class="toggle-form">
+                ¿Ya tienes cuenta? <a onclick="toggleForms()">Inicia sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForms() {
+            const loginForm = document.querySelector('.form-container.login');
+            const registerForm = document.querySelector('.form-container.register');
+            
+            loginForm.classList.toggle('active');
+            registerForm.classList.toggle('active');
+            
+            // Limpiar formularios al cambiar
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+            document.getElementById('successMessage').classList.remove('show');
+        }
+
+        // Manejar envío de formulario de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            console.log('Login:', { email, password, rememberMe });
+            alert(`Bienvenido ${email}!\n\nEn una aplicación real, se validaría contra una base de datos.`);
+            this.reset();
+        });
+
+        // Manejar envío de formulario de registro
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('La contraseña debe tener mínimo 8 caracteres');
+                return;
+            }
+
+            console.log('Registro:', { name, email, phone, password });
+            
+            // Mostrar mensaje de éxito
+            document.getElementById('successMessage').classList.add('show');
+            this.reset();
+
+            // Cambiar a formulario de login después de 2 segundos
+            setTimeout(() => {
+                toggleForms();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
